@@ -1,0 +1,39 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Devoir d’Optimisation}
+\author{Aéna ARIA \and Thomas WIECZOREK}
+\date{}
+\begin{document}
+\maketitle
+\textbf{\begin{center}
+    
+\end{center}
+}
+
+\textbf{
+\section{Enumération
+}
+}
+On énumère toutes les solutions possibles et on prend celle qui satisfait le plus de monde 
+
+Pour obtenir le nombre de recettes avec N ingrédients on prend toutes les recettes a un ingrédient  (combinaison 1 parmi N) + les recettes a deux ingrédients (2 parmi N) … jusqu’à N parmi N
+
+donc on a : 
+\[ \sum_{i=1}^{N} \frac{N!}{i!(N-i)!}  recettes\] 
+
+
+Pour A,B et C on peut évaluer chaque recette une par une et prendre celle avec le meilleur score
+\end{document}
