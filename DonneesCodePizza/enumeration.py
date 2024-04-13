@@ -1,13 +1,11 @@
 import sys
 from itertools import combinations
-
+import subprocess
 def createFile(ingr):
-    with open("A_solution", "w") as f:
+    with open("solution.txt", "w") as f:
         f.write(str(len(ingr))+" ")
         for i in ingr:
             f.write(i+" ")
-            print("FINI")
-
 
 try:
     instance_file = sys.argv[1]
@@ -40,10 +38,16 @@ for client in range(Nclients):
             ingredients[nom_ingr] = Ningredients # on lui attribue un numéro unique dans [0;N-1]
             noms_ingredients.append(nom_ingr)
             Ningredients += 1 # incrémenter le compteur d'ingrédients
-
-for i in range(1,Ningredients):
+score_max = 0
+ingredients_max = ()
+for i in range(1,Ningredients+1):
     for j in combinations(ingredients,i):
         createFile(j)
-        
-
+        res = subprocess.getoutput("python3 evaluation.py "+str(instance_file)+ " "+"solution.txt")
+        score = int(res.split()[-1])
+        if score > score_max:
+            score_max = score
+            ingredients_max = j
+createFile(ingredients_max)
+print("le score maximal est de : "+str(score_max))
 
