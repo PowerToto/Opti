@@ -35,5 +35,15 @@ donc on a :
 \[ \sum_{i=1}^{N} \frac{N!}{i!(N-i)!}  recettes\] 
 
 
-Pour A,B et C on peut évaluer chaque recette une par une et prendre celle avec le meilleur score
+Pour A,B et C on peut évaluer chaque recette une par une et prendre celle avec le meilleur score pour chaque client
+
+Sur E on a 10000 ingrédients
+
+on aurait 10000*(10000+10000)
+          (somme) (N!) (N-i)!*i!
+
+      donc environ 10000*20000 = 10³*20³= (80*10⁶ * 4986)/10⁹ = 399 secondes environ
+                                                    (nb clients)
+on peut faire 10⁹ opérations par seconde
+
 \end{document}
