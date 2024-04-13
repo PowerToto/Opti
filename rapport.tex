@@ -39,13 +39,10 @@ Pour A,B et C on peut évaluer chaque recette une par une et prendre celle avec 
 
 Sur E on a 10000 ingrédients
 
-on aurait 10000*(10000+10000)
-          (somme) (N!) (N-i)!*i!
-
-      donc environ 10000*20000 = 8 000 000 de recettes
+on aurait \[ \sum_{i=1}^{10000} \frac{N!}{i!(N-i)!} recettes\] 
 
       pour évaluer on va devoir passer chaque recette sur chaque client
         chaque itération coûte une évaluation (itération sur les deux listes du client L1 et L2)
-      on \[8 000 000 *\sum_{i=1}^{4986} L1 + L2\]
-on peut faire $10^9$ opérations par seconde donc \[\frac{8 000 000 * \sum_{i=1}^{4986} L1 + L2}{10^9}\]secondes
+     \[\sum_{i=1}^{N=10000} \frac{N!}{i!(N-i)!}*\sum_{i=1}^{4986} L1 + L2\]
+on peut faire $10^9$ opérations par seconde donc \[\frac{\sum_{i=1}^{N=10000} \frac{N!}{i!(N-i)!} * \sum_{i=1}^{4986} L1 + L2}{10^9} secondes\]
 \end{document}
