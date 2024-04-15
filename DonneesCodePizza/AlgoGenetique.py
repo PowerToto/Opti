@@ -6,6 +6,8 @@ try:
 except:
     raise Exception("Erreur à la lecture des arguments")
 
+
+iterations = 40
 data = []
 try:
     with open(instance_file, "r") as f:
@@ -55,21 +57,23 @@ def createFile(ingr):
             f.write(i+" ")
 
 def algorithme_genetique(taille_population, prob_mut, max_iterations):
-    population = [generer_pizza() for _ in range(taille_population)]
+    population = []
+    for _ in range(taille_population):
+        population.append(generer_pizza())
     max_score = 0
-    for _ in range(max_iterations):
+    while max_iterations != 0:
         # Évaluation de la population
         for pizza in population:
             createFile(pizza)
             res = subprocess.getoutput("python3 evaluation.py "+str(instance_file)+ " "+"solution.txt")
             score = int(res.split()[-1])
             if score > max_score:
+                max_iterations = iterations
                 meilleure_pizza, max_score = pizza,score
-                print(str(meilleure_pizza)+" "+str(max_score))
-      
-        # Critère d'arrêt si on atteint le score maximal
-        if max_score >= 1750:
-            break
+                print(str(pizza)+" "+str(score))
+
+            else:
+                max_iterations = max_iterations-1
 
         # Sélection des parents pour le croisement
         parents = [pizza for pizza in population[:taille_population // 2]]
@@ -84,10 +88,9 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
             if random.random() < prob_mut:
                 enfant2 = mutation(enfant2)
             nouvelle_population.extend([enfant1, enfant2])
-
         population = nouvelle_population
     return meilleure_pizza, max_score
 
-meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=50, prob_mut=0.5, max_iterations=10)
+meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=100, prob_mut=0.05, max_iterations=iterations)
 print("Meilleure pizza trouvée:", meilleure_pizza)
 print("Score obtenu:", meilleur_score)
