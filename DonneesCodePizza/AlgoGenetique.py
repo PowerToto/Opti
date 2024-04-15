@@ -33,6 +33,7 @@ for client in range(Nclients):
             Ningredients += 1 
 def generer_pizza():
     L = []
+    #plutot prendre dans nom_ingredients ?
     L.append(random.choice(list(ingredients.keys())))
     return L
 
