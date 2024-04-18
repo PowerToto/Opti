@@ -42,7 +42,7 @@ def croisement(pizza1, pizza2):
     return new_pizza1, new_pizza2
 
 def mutation(pizza):
-    nouvelle_pizza = pizza[:]
+    nouvelle_pizza = pizza
     index = random.randint(0, Ningredients - 1) #on effectue un bit flip on altère: on prend un ingrédient aléatoire on le rajoute si il était absent, on le retire si il était présent
     nouvelle_pizza[index] = 1 - nouvelle_pizza[index]
     return nouvelle_pizza
