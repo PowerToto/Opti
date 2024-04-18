@@ -7,7 +7,7 @@ except:
     raise Exception("Erreur à la lecture des arguments")
 
 
-iterations = 200
+iterations = 100
 data = []
 try:
     with open(instance_file, "r") as f:
@@ -59,6 +59,7 @@ def createFile(ingr):
 
 def algorithme_genetique(taille_population, prob_mut, max_iterations):
     population = []
+    scores = []
     for _ in range(taille_population):
         pizz = generer_pizza()
         while pizz in population:
@@ -71,6 +72,7 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
             createFile(pizza)
             res = subprocess.getoutput("python3 evaluation.py " + str(instance_file) + " solution.txt")
             score = int(res.split()[-1])
+            scores.append(score)
             if score > max_score:
                 max_iterations = iterations
                 meilleure_pizza, max_score = pizza, score
@@ -79,7 +81,7 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
                 max_iterations = max_iterations - 1
 
         # Sélection des parents pour le croisement
-        parents = [pizza for pizza in population[:taille_population // 2]]
+        parents = [pizza for _, pizza in sorted(zip(scores, population))]
 
         # Croisement et mutation
         nouvelle_population = []
@@ -95,9 +97,10 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
                 nouvelle_population.append(enfant1)
             if enfant2 not in nouvelle_population:  
                 nouvelle_population.append(enfant2)
-        population = nouvelle_population
+            #on prend les 50 meilleurs
+            population = nouvelle_population[50:]
     return meilleure_pizza, max_score
 
-meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=40, prob_mut=0.05, max_iterations=iterations)
+meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=100, prob_mut=0.03, max_iterations=iterations)
 print("Meilleure pizza trouvée:", meilleure_pizza)
 print("Score obtenu:", meilleur_score)
