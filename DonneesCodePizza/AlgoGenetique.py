@@ -38,7 +38,7 @@ def generer_pizza():
     return L
 
 def croisement (pizza1,pizza2):
-    point = random.randint(1, len(ingredients) - 1)
+    point = random.randint(1, len(ingredients) - 2)
     new_pizza1 = pizza1[:point]+pizza2[point:]
     new_pizza2 = pizza2[:point]+pizza1[point:]
     return set(new_pizza1),set(new_pizza2)
@@ -81,12 +81,11 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
                 max_iterations = max_iterations - 1
 
         # Sélection des parents pour le croisement
-        parents = [pizza for _, pizza in sorted(zip(scores, population))]
-
-        # Croisement et mutation
+        parents = [pizza for _, pizza in sorted(zip(scores, population), key=lambda x: x[0])]
+        # Croisement et mutation)
         nouvelle_population = []
         while len(nouvelle_population) < taille_population:
-            parent1, parent2 = random.sample(parents, 2)
+            parent1, parent2 = random.sample(parents[taille_population//2:], 2)
             enfant1, enfant2 = croisement(list(parent1), list(parent2))
             if random.random() < prob_mut:
                 enfant1 = mutation(enfant1)
@@ -97,8 +96,7 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
                 nouvelle_population.append(enfant1)
             if enfant2 not in nouvelle_population:  
                 nouvelle_population.append(enfant2)
-            #on prend les 50 meilleurs
-            population = nouvelle_population[50:]
+            population = nouvelle_population
     return meilleure_pizza, max_score
 
 meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=100, prob_mut=0.03, max_iterations=iterations)
