@@ -69,7 +69,11 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
             if score > max_score: #on affiche le nouveau max
                 max_score = score
                 meilleure_pizza = pizza
-                print("Nouvelle meilleure pizza trouvée:", meilleure_pizza)
+                print("Nouvelle meilleure pizza trouvée: [")
+                for i in range(Ningredients):       
+                    if meilleure_pizza[i] == 1:
+                        print(noms_ingredients[i]+" ")
+                print("]")
                 print("Score obtenu:", max_score)
             else:
                 max_iterations -= 1
@@ -91,5 +95,9 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
     return meilleure_pizza, max_score
 
 meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=100, prob_mut=0.05, max_iterations=iterations)
-print("Meilleure pizza trouvée:", meilleure_pizza)
+print("Meilleure pizza trouvée: [")
+for i in range(Ningredients):       
+    if meilleure_pizza[i] == 1:
+        print(noms_ingredients[i]+" ")
+print("]")
 print("Score obtenu:", meilleur_score)

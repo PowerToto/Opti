@@ -65,15 +65,23 @@ def recuit_simule(prob_accepte,T_max,T_min,diminution):
         if random.random() < prob_accepte:
             nouvelle_pizza = modification(pizza_actuelle)
         nouveau_score = calculer_score(nouvelle_pizza)
-        delta_score = score_actuel - nouveau_score
+        delta_score = meilleur_score - nouveau_score
         if delta_score <= 0 or random.random() < math.exp(-delta_score/T_max):
             if nouveau_score > meilleur_score: #on affiche le nouveau max
                 meilleur_score = nouveau_score
                 meilleure_pizza = nouvelle_pizza
-                print("Nouvelle meilleure pizza trouvée:", meilleure_pizza)
+                print("Nouvelle meilleure pizza trouvée: [")
+                for i in range(Ningredients):       
+                    if meilleure_pizza[i] == 1:
+                        print(noms_ingredients[i]+" ")
+                print("]")
                 print("Score obtenu:", meilleur_score)
         T_max*=diminution
     return meilleure_pizza,meilleur_score
 meilleure_pizza, meilleur_score = recuit_simule(prob_accepte=0.03, T_max=100, T_min=0.1, diminution=0.9)
-print("Meilleure pizza trouvée:", meilleure_pizza)
+print("Meilleure pizza trouvée: [")
+for i in range(Ningredients):       
+    if meilleure_pizza[i] == 1:
+        print(noms_ingredients[i]+" ")
+print("]")
 print("Score obtenu:", meilleur_score)
