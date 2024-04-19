@@ -48,7 +48,7 @@ on peut faire $10^9$ opérations par seconde donc \[\frac{\sum_{i=1}^{N=10000} \
 \textbf{
 \section{Algorithme génétique
 }}
-On prend une population de 100, pour former les enfants on coupe les parents en un point aléatoire et on mélange la première partie de la pizza1 avec la deuxième partie de la pizza2 et inversement. On applique aussi une mutation (probabilité de 0.03) où on effectue un bitflip :on prend un ingrédient aléatoire on le rajoute si il était absent, on le retire si il était présent.
+On prend une population de 100, pour former les enfants on coupe les parents en un point aléatoire et on mélange la première partie de la pizza1 avec la deuxième partie de la pizza2 et inversement. On applique aussi une mutation (probabilité de 0.03) où on effectue un bitflip: on prend un ingrédient aléatoire on le rajoute si il était absent, on le retire si il était présent.
 
 On s'arrête quand on atteint 100 générations sans amélioration
 
@@ -61,20 +61,20 @@ Score obtenu pour E: environ 350
 On part d'une recette génerée aléatoirement, que l'on va altérer avec un bitflip entre chaque solution (toujours si on obtient une descente de gradient ou avec une proba de \exp(-\Delta score/T)).
 
 La temperature choisie est 100°, on décroit de 10 à chaque itération\%  et on s'arrête lorsque la temperature atteint 0.1°
-
-Score obtenu pour D environ 1250\newline
+\newline Score obtenu pour D environ 1250\newline
 Score obtenu pour E: environ 350
 
                 
 \textbf{
 \section{Recherche Tabou
 }}
+(pas implémenté)\newline
 
-On part d'une configuration initiale qui sera une pizza choisie aléatoirement et d'une liste tabou d'abord vide.
+On partirait d'une configuration initiale qui sera une pizza choisie aléatoirement et d'une liste tabou d'abord qui stockerait les meilleures configurations.
 
-On effectue un certain nombre de mouvements (bitflips) qui ne sont pas dans la liste tabou
+On effectuerait un certain nombre de mouvements (bitflips) en évitant les configurations obtenues déjà présentes dans la liste tabou
 
+On doit éviter de retomber sur les configurations donc il faudrait les laisser dans la liste tabou, ou peut être eventuellement récuperer les dernières solutions (qui devraient être parmi les meilleures) si on ne progresse plus
 
-On s'arrête au bout d'un certain nombre d'itérations sans amélioration
+On s'arrêterait au bout d'un certain nombre d'itérations sans amélioration, on pourrait essayer de commencer avec 100
 \end{document}
-
