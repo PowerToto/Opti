@@ -22,7 +22,7 @@
     
 \end{center}
 }
-
+Pour modèliser les recettes on utilisait une liste de strings, notamment pour les énumérations, mais cette version était trop lente donc nous avon basculé sur des listes de bits pour les métaheuristiques
 \textbf{
 \section{Enumération
 }
@@ -48,18 +48,33 @@ on peut faire $10^9$ opérations par seconde donc \[\frac{\sum_{i=1}^{N=10000} \
 \textbf{
 \section{Algorithme génétique
 }}
--On modèlise les recettes par une liste de bits (1 si on prend l'ingrédient 0 sinon ), (au début on utilisait des listes de strings mais elles étaient trop lentes)
+On prend une population de 100, pour former les enfants on coupe les parents en un point aléatoire et on mélange la première partie de la pizza1 avec la deuxième partie de la pizza2 et inversement. On applique aussi une mutation (probabilité de 0.03) où on effectue un bitflip :on prend un ingrédient aléatoire on le rajoute si il était absent, on le retire si il était présent.
 
--On prend une population de 100
+On s'arrête quand on atteint 100 générations sans amélioration
 
--Pour le croisement on coupe en un point aléatoire
-
--Pour la mutation on effectue un bit flip (on prend un ingrédient aléatoire on le rajoute si il était absent, on le retire si il était présent)
-
--On s'arrête quand on a 100 générations sans amélioration
-
+Score obtenu pour D: environ 1350\newline
+Score obtenu pour E: environ 350
+                
 \textbf{
 \section{Recuit Simulé
 }}
+On part d'une recette génerée aléatoirement, que l'on va altérer avec un bitflip entre chaque solution (toujours si on obtient une descente de gradient ou avec une proba de \exp(-\Delta score/T)).
+
+La temperature choisie est 100°, on décroit de 10 à chaque itération\%  et on s'arrête lorsque la temperature atteint 0.1°
+
+Score obtenu pour D environ 1250\newline
+Score obtenu pour E: environ 350
+
+                
+\textbf{
+\section{Recherche Tabou
+}}
+
+On part d'une configuration initiale qui sera une pizza choisie aléatoirement et d'une liste tabou d'abord vide.
+
+On effectue un certain nombre de mouvements (bitflips) qui ne sont pas dans la liste tabou
+
+
+On s'arrête au bout d'un certain nombre d'itérations sans amélioration
 \end{document}
 
