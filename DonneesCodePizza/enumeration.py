@@ -1,7 +1,7 @@
 import sys
 from itertools import combinations
 import subprocess
-def createFile(ingr):
+def creer_fichier(ingr):
     with open("solution.txt", "w") as f:
         f.write(str(len(ingr))+" ")
         for i in ingr:
@@ -42,12 +42,12 @@ score_max = 0
 ingredients_max = ()
 for i in range(1,Ningredients+1):
     for j in combinations(ingredients,i):
-        createFile(j)
-        res = subprocess.getoutput("python3 evaluation.py "+str(instance_file)+ " "+"solution.txt")
-        score = int(res.split()[-1])
+        creer_fichier(j)
+        res = subprocess.getoutput("python3 evaluation.py "+str(instance_file)+ " "+"solution.txt") #on crée un fichier a partir des ingrédients et on evalue
+        score = int(res.split()[-1]) #on récupère l'output pour obtenir le score
         if score > score_max:
             score_max = score
             ingredients_max = j
-createFile(ingredients_max)
+creer_fichier(ingredients_max)
 print("le score maximal est de : "+str(score_max))
 

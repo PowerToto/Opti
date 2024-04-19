@@ -20,7 +20,7 @@ except:
 Nclients = int(data[0][0])  # Nombre total de clients
 data.pop(0)
 
-noms_ingredients = []  # identifiant (entier allant de 0 à N-1, indice dans la liste) -> nom de l'ingrédient (str) qui a cet identifiant
+noms_ingredients = []  # tableau des ingrédients présents
 
 Ningredients = 0
 
@@ -43,11 +43,11 @@ def croisement(pizza1, pizza2):
 
 def mutation(pizza):
     nouvelle_pizza = pizza
-    index = random.randint(0, Ningredients - 1) #on effectue un bit flip on altère: on prend un ingrédient aléatoire on le rajoute si il était absent, on le retire si il était présent
+    index = random.randint(0, Ningredients - 1) #on effectue un bit flip: on prend un ingrédient aléatoire on le rajoute si il était absent(0->1), on le retire si il était présent(1 ->0)
     nouvelle_pizza[index] = 1 - nouvelle_pizza[index]
     return nouvelle_pizza
 
-def createFile(ingr):
+def creer_fichier(ingr):
     with open("solution.txt", "w") as f:
         f.write(str(sum(ingr)) + " ") 
         for i in range(Ningredients):       #création du fichier de solution 
@@ -56,31 +56,31 @@ def createFile(ingr):
 
 def algorithme_genetique(taille_population, prob_mut, max_iterations):
     population = [generer_pizza() for _ in range(taille_population)] #génération de la population de base
-    max_score = 0
+    score_max = 0
     meilleure_pizza = None
     
     while max_iterations > 0:
         scores = []
         for pizza in population:
-            createFile(pizza) #pour chaque pizza on crée un fichier
+            creer_fichier(pizza) #pour chaque pizza on crée un fichier
             res = subprocess.getoutput("python3 evaluation.py " + str(instance_file) + " solution.txt") #on évalue le fichier
             score = int(res.split()[-1]) #on récupère le score (dernière case de l'output)
             scores.append(score)
-            if score > max_score: #on affiche le nouveau max
-                max_score = score
+            if score >  score_max: #on affiche le max s'il change
+                score_max = score
                 meilleure_pizza = pizza
                 print("Nouvelle meilleure pizza trouvée: [")
                 for i in range(Ningredients):       
                     if meilleure_pizza[i] == 1:
                         print(noms_ingredients[i]+" ")
                 print("]")
-                print("Score obtenu:", max_score)
+                print("Score obtenu:",  score_max)
             else:
                 max_iterations -= 1
 
     
-        parents = [pizza for _, pizza in sorted(zip(scores, population), key=lambda x: x[0])]   # sélection des parents pour le croisement (on forme des couples score,population (même index))
-        nouvelle_population = []
+        parents = [pizza for _, _ in sorted(zip(scores, population), key=lambda x: x[0])]   # sélection des parents pour le croisement (on forme des couples score,pizza (même index))
+        nouvelle_population = [] #on repart d'une population vide 
         while len(nouvelle_population) < taille_population: 
             parent1, parent2 = random.sample(parents[taille_population//2:], 2) #on prend la deuxième moitié de la population (meilleurs scores)
             enfant1, enfant2 = croisement(parent1, parent2) 
@@ -92,9 +92,9 @@ def algorithme_genetique(taille_population, prob_mut, max_iterations):
 
         population = nouvelle_population
 
-    return meilleure_pizza, max_score
+    return meilleure_pizza, score_max
 
-meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=100, prob_mut=0.05, max_iterations=iterations)
+meilleure_pizza, meilleur_score = algorithme_genetique(taille_population=100, prob_mut=0.03, max_iterations=iterations)
 print("Meilleure pizza trouvée: [")
 for i in range(Ningredients):       
     if meilleure_pizza[i] == 1:
