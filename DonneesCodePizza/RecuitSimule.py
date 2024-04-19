@@ -55,13 +55,12 @@ def calculer_score(pizza):
     score = int(res.split()[-1])
     return score
 
-def recuit_simule(taille_population, prob_accepte,T_max,T_min,diminution):
+def recuit_simule(prob_accepte,T_max,T_min,diminution):
     pizza_actuelle = generer_pizza()
     meilleure_pizza = None
     score_actuel = calculer_score(pizza_actuelle)
     meilleur_score = score_actuel
     while T_max > T_min:
-        for _ in range(taille_population):
             nouvelle_pizza = pizza_actuelle
             if random.random() < prob_accepte:
                 nouvelle_pizza = modification(pizza_actuelle)
@@ -73,8 +72,8 @@ def recuit_simule(taille_population, prob_accepte,T_max,T_min,diminution):
                     meilleure_pizza = nouvelle_pizza
                     print("Nouvelle meilleure pizza trouvée:", meilleure_pizza)
                     print("Score obtenu:", meilleur_score)
-        T_max*=diminution
+            T_max*=diminution
     return meilleure_pizza,meilleur_score
-meilleure_pizza, meilleur_score = recuit_simule(taille_population=100, prob_accepte=0.03, T_max=50, T_min=0.1, diminution=0.9)
+meilleure_pizza, meilleur_score = recuit_simule(prob_accepte=0.03, T_max=50, T_min=0.1, diminution=0.9)
 print("Meilleure pizza trouvée:", meilleure_pizza)
 print("Score obtenu:", meilleur_score)
